@@ -33,7 +33,7 @@ int Board::initialize()
 		}
 	}
 
-	placeRandomBlocks((int)sqrt(sizeX * sizeY));
+	placeRandomBlocks((int)(sqrt(sizeX * sizeY)/2));
 
 	for (int i = 1; i < sizeX - 1; i++) {
 		for (int z = 1; z < sizeY - 1; z++) {
