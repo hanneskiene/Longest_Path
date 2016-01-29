@@ -33,7 +33,7 @@ int Head::modifyEnvironment()
 
 int Head::move(Square::direction dir)
 {
-	if (currentSquare && currentSquare->getNeighbour(dir)->getValue() == 1) {
+	if (currentSquare && currentSquare->getNeighbour(dir)->getValue() == 1 && currentSquare->getNeighbour(dir)->getFreeFieldIndex() > 0) {
 		currentSquare = currentSquare->getNeighbour(dir);
 		currentSquare->setValue(2);
 		path.push_back(currentSquare);
@@ -60,6 +60,11 @@ int Head::moveBack()
 int Head::getStepCount()
 {
 	return path.size();
+}
+
+Square * Head::getCurrentSquare()
+{
+	return currentSquare;
 }
 
 int Head::markStartAndEnd() {

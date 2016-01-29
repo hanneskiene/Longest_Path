@@ -26,10 +26,13 @@ int PathSolver::solveBoard()
 
 
 	for (int i = 0; i < 100000; i++) {
+
+		system("cls");
 		board->consoleDrawOut();
 		//std::cin.get();
-		system("cls");
+
 		if (!solveStep()) {
+			std::cin.get();
 			for (int i = 0; i < backSteps; i++)
 				board->getHead()->moveBack();
 			backSteps++;
@@ -38,10 +41,10 @@ int PathSolver::solveBoard()
 			}
 		}
 		int currentIndex = board->getBoardIndex();
-		if (currentIndex > (board->getSizeX() - 2)*(board->getSizeX() - 2)* 4.5 ) {
+		//if (currentIndex > (board->getSizeX() - 2)*(board->getSizeX() - 2)* 4.5 ) {
 		//if(currentIndex > 520){
-			return true;
-		}
+			//return true;
+		//}
 		if (currentIndex > highestIndex) {
 			highestIndex = currentIndex;
 			//std::cout << "Step: " << i << " Index: " << highestIndex << std::endl;
@@ -54,18 +57,26 @@ int PathSolver::solveBoard()
 int PathSolver::solveStep()
 {
 	int currentHighestBoardIndex = 2;
+	int highestDistance = 0;
 
 	std::vector<Square::direction> possibleSteps;
 
+	//Move into each direction once
 	for (int i = 0; i < 4; i++) {
 		if (board->getHead()->move(Square::direction(i))) {
 			int thisIndex = board->getBoardIndex();
-			if (thisIndex >= currentHighestBoardIndex) {
+
+			if (thisIndex == currentHighestBoardIndex) {
+				possibleSteps.push_back(Square::direction(i));
+			}else if (thisIndex > currentHighestBoardIndex) {
 				currentHighestBoardIndex = thisIndex;
+				if(possibleSteps.size() > 0)
+					possibleSteps.pop_back();
 				possibleSteps.push_back(Square::direction(i));
 			}
-			//possibleSteps.push_back(Square::direction(i));
+			//Reset the Step
 			board->getHead()->moveBack();
+
 		}
 	}
 	if (possibleSteps.size() > 0) {

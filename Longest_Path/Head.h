@@ -17,6 +17,8 @@ public:
 
 	int getStepCount();
 
+	Square * getCurrentSquare();
+
 	int markStartAndEnd();
 
 private:

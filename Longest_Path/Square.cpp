@@ -6,11 +6,14 @@ Square::Square()
 {
 	value = 1;
 	freeFieldIndex = 0;
+	targetDistance = -1;
 }
 
 Square::Square(int par)
 {
 	value = par;
+	freeFieldIndex = 0;
+	targetDistance = -1;
 }
 
 

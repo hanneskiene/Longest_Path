@@ -25,11 +25,15 @@ public:
 
 	int placeRandomBlocks(int);
 
+	int placeRandomTarget();
+
 	int consoleValuesOut();
 
 	int consoleDrawOut();
 
 	int consoleEnvOut();
+
+	int consoleDistOut();
 
 	Head * getHead();
 

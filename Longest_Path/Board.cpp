@@ -33,7 +33,7 @@ int Board::initialize()
 		}
 	}
 
-	placeRandomBlocks((int)(sqrt(sizeX * sizeY)/2));
+	placeRandomBlocks((int)(sqrt(sizeX * sizeY)));
 
 	for (int i = 1; i < sizeX - 1; i++) {
 		for (int z = 1; z < sizeY - 1; z++) {
@@ -45,6 +45,8 @@ int Board::initialize()
 			squares.at(i).at(z).updateFreeFieldIndex();
 		}
 	}
+
+	placeRandomTarget();
 
 	return 0;
 }
@@ -89,6 +91,24 @@ int Board::placeRandomBlocks(int parC)
 	return true;
 }
 
+int Board::placeRandomTarget()
+{
+	//Set Target Position
+	int x = (std::rand() % sizeX - 1) + 1;
+	int y = (std::rand() % sizeX - 1) + 1;
+
+	//Set the Target's distance to 0;
+	squares.at(x).at(y).setTargetDistance(0);
+
+	//Update all Target Distances
+	for (int i = 1; i < sizeX - 1; i++) {
+		for (int z = 1; z < sizeY - 1; z++) {
+			squares.at(i).at(z).setTargetDistance(abs(x - i) + abs(y - z));
+		}
+	}
+	return true;
+}
+
 int Board::consoleValuesOut()
 {
 	std::cout << "Board Values" << std::endl;
@@ -124,6 +144,18 @@ int Board::consoleEnvOut()
 	for (int i = 0; i < sizeX; i++) {
 		for (int z = 0; z < sizeY; z++) {
 			std::cout << getSquareAt(i, z)->getFreeFieldIndex() << " ";
+		}
+		std::cout << std::endl;
+	}
+	return 0;
+}
+
+int Board::consoleDistOut()
+{
+	std::cout << "Distances to Target" << std::endl;
+	for (int i = 0; i < sizeX; i++) {
+		for (int z = 0; z < sizeY; z++) {
+			std::cout << getSquareAt(i, z)->getTargetDistance() << " ";
 		}
 		std::cout << std::endl;
 	}
