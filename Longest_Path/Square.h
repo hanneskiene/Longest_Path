@@ -16,9 +16,13 @@ public:
 	int addNeighbour(direction , Square*);
 	Square *getNeighbour(direction);
 
+	int getTargetDistance();
+	int setTargetDistance(int);
+
 private:
 	int value;
 	int freeFieldIndex;
+	int targetDistance;
 
 	Square *neighbours[4] = {};
 };

@@ -63,3 +63,14 @@ Square * Square::getNeighbour(direction dir)
 {
 	return neighbours[dir];
 }
+
+int Square::getTargetDistance()
+{
+	return targetDistance;
+}
+
+int Square::setTargetDistance(int param)
+{
+	targetDistance = param;
+	return 0;
+}
