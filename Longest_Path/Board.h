@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Square.h"
 #include "Head.h"
+#include  <memory>
 
 class Board
 {
@@ -19,7 +20,7 @@ public:
 
 	int getValueAt(int, int);
 
-	Square* getSquareAt(int , int);
+	std::shared_ptr<Square> getSquareAt(int , int);
 
 	int getBoardIndex();
 
@@ -41,7 +42,7 @@ public:
 private:
 	int sizeX, sizeY;
 
-	std::vector< std::vector<Square> > squares;
+	std::vector< std::vector<std::shared_ptr<Square>> > squares;
 
 	Head head;
 	

@@ -12,14 +12,14 @@
 
 const int SIZEX = 13, SIZEY = 13;
 
-Board *board;
+std::shared_ptr<Board> board;
 
 int output();
 int arrayOut();
 
 int main()
 {
-	board = new Board(SIZEX, SIZEY);
+	board = std::make_shared<Board>(SIZEX, SIZEY);
 
 	board->getHead()->setCurrentSquare(board->getSquareAt(1, 1));
 
@@ -32,6 +32,8 @@ int main()
 		std::cout << "Failed" << std::endl;
 
 	arrayOut();
+
+	
 
 	std::cin.get();
 

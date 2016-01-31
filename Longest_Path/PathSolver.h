@@ -8,13 +8,14 @@ public:
 	PathSolver();
 	~PathSolver();
 
-	int setBoard(Board *);
+	int setBoard(std::shared_ptr<Board>);
 	int solveBoard();
 
 
 private:
-	Board *board;
+	std::shared_ptr<Board> board;
 
 	int solveStep();
+	int solveStepDist();
 };
 

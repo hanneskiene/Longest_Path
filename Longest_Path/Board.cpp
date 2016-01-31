@@ -25,11 +25,11 @@ int Board::initialize()
 {
 	//Initialize Squares
 	for (int i = 0; i < sizeX; i++) {
-		squares.push_back(*new std::vector<Square>);
+		squares.push_back(*new std::vector<std::shared_ptr<Square>>);
 		for (int z = 0; z < sizeY; z++) {
-			squares.at(i).push_back(*new Square);
+			squares.at(i).push_back(std::make_shared<Square>());
 			if (i == 0 || i == sizeX - 1 || z == 0 || z == sizeY - 1)
-				squares.at(i).at(z).setValue(0);
+				squares.at(i).at(z)->setValue(0);
 		}
 	}
 
@@ -37,12 +37,12 @@ int Board::initialize()
 
 	for (int i = 1; i < sizeX - 1; i++) {
 		for (int z = 1; z < sizeY - 1; z++) {
-			squares.at(i).at(z).addNeighbour(Square::LEFT, &squares.at(i).at(z - 1));
-			squares.at(i).at(z).addNeighbour(Square::UP, &squares.at(i - 1).at(z));
-			squares.at(i).at(z).addNeighbour(Square::RIGHT, &squares.at(i).at(z + 1));
-			squares.at(i).at(z).addNeighbour(Square::DOWN, &squares.at(i + 1).at(z));
+			squares.at(i).at(z)->addNeighbour(Square::LEFT, squares.at(i).at(z - 1));
+			squares.at(i).at(z)->addNeighbour(Square::UP, squares.at(i - 1).at(z));
+			squares.at(i).at(z)->addNeighbour(Square::RIGHT, squares.at(i).at(z + 1));
+			squares.at(i).at(z)->addNeighbour(Square::DOWN, squares.at(i + 1).at(z));
 
-			squares.at(i).at(z).updateFreeFieldIndex();
+			squares.at(i).at(z)->updateFreeFieldIndex();
 		}
 	}
 
@@ -63,12 +63,12 @@ int Board::getSizeY()
 
 int Board::getValueAt(int parX, int parY)
 {
-	return squares.at(parX).at(parY).getValue();
+	return squares.at(parX).at(parY)->getValue();
 }
 
-Square* Board::getSquareAt(int parX, int parY)
+std::shared_ptr<Square> Board::getSquareAt(int parX, int parY)
 {
-	return &squares.at(parX).at(parY);
+	return squares.at(parX).at(parY);
 }
 
 int Board::getBoardIndex()
@@ -76,7 +76,7 @@ int Board::getBoardIndex()
 	int boardIndex = 0;
 	for (int i = 1; i < sizeX - 1; i++) {
 		for (int z = 1; z < sizeY - 1; z++) {
-			boardIndex += squares.at(i).at(z).getFreeFieldIndex();
+			boardIndex += squares.at(i).at(z)->getFreeFieldIndex();
 		}
 	}
 	return boardIndex;
@@ -86,7 +86,7 @@ int Board::placeRandomBlocks(int parC)
 {
 	std::srand(std::time(0));
 	for (int i = 0; i < parC; i++) {
-		squares.at((std::rand() % sizeX - 1) + 1).at((std::rand() % sizeX - 1) + 1).setValue(0);
+		squares.at((std::rand() % sizeX - 1) + 1).at((std::rand() % sizeX - 1) + 1)->setValue(0);
 	}
 	return true;
 }
@@ -98,12 +98,12 @@ int Board::placeRandomTarget()
 	int y = (std::rand() % sizeX - 1) + 1;
 
 	//Set the Target's distance to 0;
-	squares.at(x).at(y).setTargetDistance(0);
+	squares.at(x).at(y)->setTargetDistance(0);
 
 	//Update all Target Distances
 	for (int i = 1; i < sizeX - 1; i++) {
 		for (int z = 1; z < sizeY - 1; z++) {
-			squares.at(i).at(z).setTargetDistance(abs(x - i) + abs(y - z));
+			squares.at(i).at(z)->setTargetDistance(abs(x - i) + abs(y - z));
 		}
 	}
 	return true;

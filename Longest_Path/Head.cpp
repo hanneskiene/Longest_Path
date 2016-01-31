@@ -1,5 +1,5 @@
 #include "Head.h"
-
+#include <iostream>
 
 
 Head::Head()
@@ -9,9 +9,10 @@ Head::Head()
 
 Head::~Head()
 {
+	std::cout << "Head Destroyed" << std::endl;
 }
 
-int Head::setCurrentSquare(Square* par)
+int Head::setCurrentSquare(std::shared_ptr<Square> par)
 {
 	currentSquare = par;
 	currentSquare->setValue(2);
@@ -62,7 +63,7 @@ int Head::getStepCount()
 	return path.size();
 }
 
-Square * Head::getCurrentSquare()
+std::shared_ptr<Square> Head::getCurrentSquare()
 {
 	return currentSquare;
 }

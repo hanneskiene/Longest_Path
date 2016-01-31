@@ -1,5 +1,5 @@
 #include "Square.h"
-
+#include <iostream>
 
 
 Square::Square()
@@ -19,6 +19,7 @@ Square::Square(int par)
 
 Square::~Square()
 {
+	std::cout << "Square Destroyed" << std::endl;
 }
 
 int Square::getValue()
@@ -56,13 +57,13 @@ int Square::updateFreeFieldIndex()
 	return 0;
 }
 
-int Square::addNeighbour(direction dir, Square *square)
+int Square::addNeighbour(direction dir, std::shared_ptr<Square> square)
 {
 	neighbours[dir] = square;
 	return 0;
 }
 
-Square * Square::getNeighbour(direction dir)
+std::shared_ptr<Square> Square::getNeighbour(direction dir)
 {
 	return neighbours[dir];
 }
@@ -75,5 +76,16 @@ int Square::getTargetDistance()
 int Square::setTargetDistance(int param)
 {
 	targetDistance = param;
+	return 0;
+}
+
+int Square::getProbability(direction dir)
+{
+	return probability[dir];
+}
+
+int Square::setProbability(direction dir, int param)
+{
+	probability[dir] = param;
 	return 0;
 }

@@ -9,7 +9,7 @@ public:
 	Head();
 	~Head();
 
-	int setCurrentSquare(Square *);
+	int setCurrentSquare(std::shared_ptr<Square>);
 
 	int move(Square::direction);
 
@@ -17,13 +17,13 @@ public:
 
 	int getStepCount();
 
-	Square * getCurrentSquare();
+	std::shared_ptr<Square> getCurrentSquare();
 
 	int markStartAndEnd();
 
 private:
-	Square *currentSquare;
-	std::vector<Square*> path;
+	std::shared_ptr<Square> currentSquare;
+	std::vector<std::shared_ptr<Square>> path;
 
 	int modifyEnvironment();
 };

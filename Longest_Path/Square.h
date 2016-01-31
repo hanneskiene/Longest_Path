@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 class Square
 {
 public:
@@ -13,17 +14,22 @@ public:
 
 	int getFreeFieldIndex();
 	int updateFreeFieldIndex();
-	int addNeighbour(direction , Square*);
-	Square *getNeighbour(direction);
+	int addNeighbour(direction , std::shared_ptr<Square>);
+	std::shared_ptr<Square> getNeighbour(direction);
 
 	int getTargetDistance();
 	int setTargetDistance(int);
+
+	int getProbability(direction);
+	int setProbability(direction, int);
 
 private:
 	int value;
 	int freeFieldIndex;
 	int targetDistance;
 
-	Square *neighbours[4] = {};
+	std::shared_ptr<Square> neighbours[4] = {};
+
+	int probability[4] = {};
 };
 
