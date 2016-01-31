@@ -17,5 +17,6 @@ private:
 
 	int solveStep();
 	int solveStepDist();
+	int solveStepProb();
 };
 

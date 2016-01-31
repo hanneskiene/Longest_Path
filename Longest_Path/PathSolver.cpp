@@ -2,6 +2,8 @@
 
 #include <ctime>
 
+#define debug
+
 
 PathSolver::PathSolver()
 {
@@ -26,13 +28,14 @@ int PathSolver::solveBoard()
 
 
 	for (int i = 0; i < 100000; i++) {
-
-		//system("cls");
-		//board->consoleDrawOut();
-		//std::cin.get();
-
-		if (!solveStepDist()) {
+#ifdef debug
+		system("cls");
+		board->consoleDrawOut();
+		std::cin.get();
+#endif
+		if (!solveStepProb()) {
 			//std::cin.get();
+			board->getHead()->updatePathProb();
 			for (int i = 0; i < backSteps; i++)
 				board->getHead()->moveBack();
 			backSteps++;
@@ -120,6 +123,39 @@ int PathSolver::solveStepDist()
 		int dir = possibleSteps.at(((int)(std::rand() % possibleSteps.size())));
 		board->getHead()->move(Square::direction(dir));
 		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+int PathSolver::solveStepProb()
+{
+	auto head = board->getHead();
+
+	int total = 0;
+	std::vector<int> possibleSteps = {};
+	std::vector<int> probability = {};
+
+	//Move into each direction once
+	for (int i = 0; i < 4; i++) {
+		if (head->couldMove(Square::direction(i))) {
+			total += head->getCurrentSquare()->getProbability(Square::direction(i));
+			probability.push_back(head->getCurrentSquare()->getProbability(Square::direction(i)));
+			possibleSteps.push_back(i);
+		}
+	}
+	if (possibleSteps.size() > 0) {
+		int rand = (int)(std::rand() % total);
+		for (int i = 0; i < possibleSteps.size(); i++) {
+			int lower = 0;
+			for (int z = 0; z < i; z++) {
+				lower += probability.at(z);
+			}
+			if (rand > lower && rand < lower + probability.at(i)) {
+				head->move(Square::direction(possibleSteps.at(i)));
+			}
+		}
 	}
 	else {
 		return false;

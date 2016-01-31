@@ -32,11 +32,20 @@ int Head::modifyEnvironment()
 	return 0;
 }
 
+int Head::couldMove(Square::direction dir)
+{
+	if (currentSquare && currentSquare->getNeighbour(dir)->getValue() == 1 && currentSquare->getNeighbour(dir)->getFreeFieldIndex() > 0)
+		return true;
+	else
+		return false;
+}
+
 int Head::move(Square::direction dir)
 {
 	if (currentSquare && currentSquare->getNeighbour(dir)->getValue() == 1 && currentSquare->getNeighbour(dir)->getFreeFieldIndex() > 0) {
 		currentSquare = currentSquare->getNeighbour(dir);
 		currentSquare->setValue(2);
+		currentSquare->setLastDir(dir);
 		path.push_back(currentSquare);
 
 		modifyEnvironment();
@@ -68,8 +77,17 @@ std::shared_ptr<Square> Head::getCurrentSquare()
 	return currentSquare;
 }
 
-int Head::markStartAndEnd() {
+int Head::markStartAndEnd() 
+{
 	path.at(0)->setValue(3);
 	path.back()->setValue(4);
 	return true;
+}
+
+int Head::updatePathProb()
+{
+	if (path.size() < 1) return false;
+	for (int i = path.size() - 1; i > 0; i--) {
+		path.at(i)->updateProbabilityDist(path.size() - i);
+	}
 }

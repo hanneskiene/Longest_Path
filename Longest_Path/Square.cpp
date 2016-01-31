@@ -5,15 +5,22 @@
 Square::Square()
 {
 	value = 1;
-	freeFieldIndex = 0;
-	targetDistance = -1;
+	initialize();
 }
 
 Square::Square(int par)
 {
 	value = par;
+	initialize();
+}
+int Square::initialize()
+{
 	freeFieldIndex = 0;
 	targetDistance = -1;
+	for (int i = 0; i < 4; i++) {
+		probability.push_back(100);
+	}
+	return true;
 }
 
 
@@ -76,7 +83,12 @@ int Square::getTargetDistance()
 int Square::setTargetDistance(int param)
 {
 	targetDistance = param;
-	return 0;
+	return true;
+}
+
+std::vector<int> Square::getProbability()
+{
+	return probability;
 }
 
 int Square::getProbability(direction dir)
@@ -87,5 +99,22 @@ int Square::getProbability(direction dir)
 int Square::setProbability(direction dir, int param)
 {
 	probability[dir] = param;
-	return 0;
+	return true;
+}
+
+int Square::updateProbabilityDist(int param)
+{
+	probability[lastDir] = (int) (probability[lastDir] * std::pow(0.9, param));
+	return true;
+}
+
+int Square::setLastDir(direction dir) 
+{
+	lastDir = dir;
+	return true;
+}
+
+int Square::getLastDir() 
+{
+	return lastDir;
 }

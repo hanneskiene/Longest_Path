@@ -42,10 +42,10 @@ int main()
 
 int output() 
 {
-	//board->consoleValuesOut();
-	//std::cout << std::endl;
-	//board->consoleEnvOut();
-	//std::cout << std::endl;
+	board->consoleValuesOut();
+	std::cout << std::endl;
+	board->consoleEnvOut();
+	std::cout << std::endl;
 	board->consoleDrawOut();
 
 	std::cout << "Board Index: " << board->getBoardIndex() << std::endl;

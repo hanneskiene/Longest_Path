@@ -11,6 +11,8 @@ public:
 
 	int setCurrentSquare(std::shared_ptr<Square>);
 
+	int couldMove(Square::direction dir);
+
 	int move(Square::direction);
 
 	int moveBack();
@@ -20,6 +22,8 @@ public:
 	std::shared_ptr<Square> getCurrentSquare();
 
 	int markStartAndEnd();
+
+	int updatePathProb();
 
 private:
 	std::shared_ptr<Square> currentSquare;
