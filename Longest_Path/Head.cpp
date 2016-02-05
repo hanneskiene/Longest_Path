@@ -88,6 +88,6 @@ int Head::updatePathProb()
 {
 	if (path.size() < 1) return false;
 	for (int i = path.size() - 1; i > 0; i--) {
-		path.at(i)->updateProbabilityDist(path.size() - i);
+		path.at(i)->updateProbabilityDist(i); //Wrong!
 	}
 }
