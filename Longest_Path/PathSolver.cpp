@@ -2,7 +2,7 @@
 
 #include <ctime>
 
-#define debug
+//#define debug
 
 
 PathSolver::PathSolver()
@@ -31,7 +31,7 @@ int PathSolver::solveBoard()
 #ifdef debug
 		system("cls");
 		board->consoleDrawOut();
-		std::cin.get();
+		//std::cin.get();
 #endif
 		if (!solveStepProb()) {
 			//std::cin.get();
@@ -44,7 +44,7 @@ int PathSolver::solveBoard()
 			}
 		}
 		int currentIndex = board->getBoardIndex();
-		if (currentIndex > (board->getSizeX() - 2)*(board->getSizeX() - 2)* 4.5 ) {
+		if (currentIndex > (board->getSizeX() - 2)*(board->getSizeX() - 2)* 4.1 ) {
 		//if(currentIndex > 520){
 			return true;
 		}

@@ -104,7 +104,7 @@ int Square::setProbability(direction dir, int param)
 
 int Square::updateProbabilityDist(int param)
 {
-	probability[lastDir] = (int) (probability[lastDir] * std::pow(0.9, param));
+	probability[lastDir] = (int) (probability[lastDir] * (1 - std::pow(0.1, param))); //Wrong!
 	return true;
 }
 

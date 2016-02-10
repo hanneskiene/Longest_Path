@@ -87,7 +87,8 @@ int Head::markStartAndEnd()
 int Head::updatePathProb()
 {
 	if (path.size() < 1) return false;
-	for (int i = path.size() - 1; i > 0; i--) {
-		path.at(i)->updateProbabilityDist(i); //Wrong!
+	for (int i = path.size() - 2; i > 0; i--) {
+		path.at(i)->updateProbabilityDist((path.size() - 1) - i ); //Wrong!
 	}
+	return true;
 }
